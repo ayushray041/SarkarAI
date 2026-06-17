@@ -3,7 +3,12 @@ import { useAnalysis } from "@/lib/analysis-context"
 import { useLanguage } from "@/lib/language-context"
 import { translations } from "@/lib/translations"
 import { useState } from "react"
-import { MessageSquareText, SendHorizonal, Sparkles } from "lucide-react"
+import {
+  MessageSquareText,
+  SendHorizonal,
+  Sparkles,
+  Mic,
+} from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -28,6 +33,7 @@ export function AskQuestions() {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
+  const [listening, setListening] = useState(false)
   const { documentText, analysis } = useAnalysis()
   const { language } = useLanguage()
   const t = translations[language]
@@ -80,6 +86,46 @@ export function AskQuestions() {
     }
   
     setInput("")
+  }
+  function startListening() {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition
+  
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser.")
+      return
+    }
+  
+    const recognition = new SpeechRecognition()
+  
+    recognition.lang =
+  language === "hi"
+    ? "hi-IN"
+    : "en-US"
+    recognition.interimResults = false
+  
+    recognition.onstart = () => {
+      setListening(true)
+    }
+  
+    recognition.onend = () => {
+      setListening(false)
+    }
+    recognition.onerror = (event: any) => {
+      console.error("VOICE ERROR:", event.error)
+    }
+  
+    recognition.onresult = (event: any) => {
+      const transcript =
+        event.results[0][0].transcript
+    
+      console.log("VOICE:", transcript)
+    
+      setInput(transcript)
+    }
+  
+    recognition.start()
   }
   console.log("CURRENT LOADING STATE:", loading)
   return (
@@ -164,15 +210,33 @@ export function AskQuestions() {
           className="glass min-h-11 resize-none border-0 placeholder:text-muted-foreground"
           rows={1}
         />
-        <Button
-  type="submit"
-  size="icon"
-  disabled={loading}
-  className="size-11 shrink-0"
-  aria-label="Send question"
->
-  <SendHorizonal className="size-4.5" aria-hidden="true" />
-</Button>
+        <div className="flex gap-2">
+  <Button
+    type="button"
+    size="icon"
+    onClick={startListening}
+    className="size-11 shrink-0"
+    aria-label="Voice input"
+  >
+    <Mic
+      className={
+        listening
+          ? "size-4.5 animate-pulse"
+          : "size-4.5"
+      }
+    />
+  </Button>
+
+  <Button
+    type="submit"
+    size="icon"
+    disabled={loading}
+    className="size-11 shrink-0"
+    aria-label="Send question"
+  >
+    <SendHorizonal className="size-4.5" />
+  </Button>
+</div>
       </form>
     </Card>
   )
