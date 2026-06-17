@@ -8,6 +8,7 @@ import {
   SendHorizonal,
   Sparkles,
   Mic,
+  Copy,
 } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -87,6 +88,10 @@ export function AskQuestions() {
   
     setInput("")
   }
+  async function copyAnswer(text: string) {
+  await navigator.clipboard.writeText(text)
+  alert("Answer copied!")
+}
   function startListening() {
     const SpeechRecognition =
       (window as any).SpeechRecognition ||
@@ -153,16 +158,28 @@ export function AskQuestions() {
                 <Sparkles className="size-3.5" aria-hidden="true" />
               </div>
             )}
-            <p
-              className={cn(
-                "max-w-[80%] text-pretty rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed",
-                msg.role === "user"
-                  ? "bg-primary text-primary-foreground"
-                  : "border border-glass-border bg-secondary text-secondary-foreground",
-              )}
-            >
-              {msg.text}
-            </p>
+            <div className="max-w-[80%]">
+  <p
+    className={cn(
+      "text-pretty rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed",
+      msg.role === "user"
+        ? "bg-primary text-primary-foreground"
+        : "border border-glass-border bg-secondary text-secondary-foreground",
+    )}
+  >
+    {msg.text}
+  </p>
+
+  {msg.role === "ai" && (
+    <button
+      onClick={() => copyAnswer(msg.text)}
+      className="mt-1 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+    >
+      <Copy className="size-3" />
+      Copy
+    </button>
+  )}
+</div>
           </div>
         ))}
         {loading && (
