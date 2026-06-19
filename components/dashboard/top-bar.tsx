@@ -14,7 +14,7 @@ export function TopBar() {
           <span>Document workspace</span>
         </div>
         <h1 className="mt-1 text-balance font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-        Welcome back, Priya
+         Welcome to SarkarAI
          </h1>
       </div>
 
@@ -44,7 +44,7 @@ export function TopBar() {
           className="flex size-10 items-center justify-center rounded-xl bg-primary font-medium text-primary-foreground"
           aria-hidden="true"
         >
-          PS
+          SA
         </div>
       </div>
     </header>
