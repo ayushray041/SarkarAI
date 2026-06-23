@@ -6,12 +6,6 @@ import { CalendarClock } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
-const dates = [
-  { label: "Application window opens", date: "01 Apr 2026", status: "Open", tone: "open" },
-  { label: "Document verification", date: "20 May 2026", status: "Upcoming", tone: "upcoming" },
-  { label: "Final submission deadline", date: "30 Jun 2026", status: "Critical", tone: "critical" },
-  { label: "Subsidy disbursement", date: "15 Aug 2026", status: "Tentative", tone: "tentative" },
-]
 
 const toneStyles: Record<string, string> = {
   open: "bg-accent text-accent-foreground",
@@ -64,8 +58,26 @@ export function ImportantDates() {
     className="absolute left-[3px] top-1 h-[calc(100%-1rem)] w-px bg-border"
     aria-hidden="true"
   />
+  {(!analysis?.importantDates ||
+  analysis.importantDates.length === 0) && (
+  <div className="flex h-48 flex-col items-center justify-center text-center">
+  <CalendarClock className="mb-4 size-10 text-muted-foreground/50" />
 
-  {((analysis?.importantDates || dates).map((item) => {
+  <h3 className="font-medium">
+    No important dates detected
+  </h3>
+
+  <p className="mt-1 text-sm text-muted-foreground">
+    Upload a government document and AI will extract deadlines automatically.
+  </p>
+
+  <div className="mt-4 text-xs text-muted-foreground">
+    Application Deadlines • Verification Dates • Submission Alerts
+  </div>
+</div>
+)}
+
+  {((analysis?.importantDates || []).map((item) => {
     const daysLeft = getDaysRemaining(item.date);
 
     // 1. Compute the text color class before rendering
