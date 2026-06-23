@@ -6,6 +6,7 @@ import { ImportantDates } from "@/components/dashboard/important-dates"
 import { RequiredDocuments } from "@/components/dashboard/required-documents"
 import { Eligibility } from "@/components/dashboard/eligibility"
 import { AskQuestions } from "@/components/dashboard/ask-questions"
+import { SchemeRecommendations } from "@/components/dashboard/scheme-recommendations"
 
 export default function Page() {
   return (
@@ -35,6 +36,9 @@ export default function Page() {
 
           <div className="lg:col-span-12">
             <AskQuestions />
+            <div className="lg:col-span-12">
+            <SchemeRecommendations />
+            </div>
           </div>
         </div>
       </main>

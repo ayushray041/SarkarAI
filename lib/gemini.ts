@@ -130,15 +130,15 @@ export async function analyzeGovernmentDocument(
   const ai = getClient()
 
   const response = await ai.models.generateContent({
-    model: MODEL,
-    contents: text,
-    config: {
-      systemInstruction: SYSTEM_INSTRUCTION,
-      responseMimeType: "application/json",
-      responseSchema,
-      temperature: 0.2,
-    },
-  })
+  model: MODEL,
+  contents: text,
+  config: {
+    systemInstruction: SYSTEM_INSTRUCTION,
+    responseMimeType: "application/json",
+    responseSchema,
+    temperature: 0.2,
+  },
+})
 
   const raw = response.text
 

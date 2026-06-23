@@ -95,7 +95,9 @@ console.log("ANALYSIS:", analysis)
 if (analysis.error) {
   console.error("ANALYZE ERROR:", analysis.error)
 
-  alert(analysis.error)
+  alert(
+    "AI service is currently busy. Please try again in a few moments."
+  )
 
   return
 }
