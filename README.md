@@ -1,3 +1,5 @@
+<div align="center">
+
 # 🏛️ SarkarAI
 
 ### Transforming Government Documents into Clear, Actionable Insights with AI
