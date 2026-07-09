@@ -3,7 +3,7 @@ import { useAnalysis } from "@/lib/analysis-context"
 import * as pdfjsLib from "pdfjs-dist"
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.worker.min.mjs"
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs"
 import { useState, useRef, type DragEvent } from "react"
 import { UploadCloud, FileText, CheckCircle2, X } from "lucide-react"
 import { Card } from "@/components/ui/card"
